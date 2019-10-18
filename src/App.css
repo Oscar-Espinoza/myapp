@@ -1,0 +1,27 @@
+body{
+  width: 100%;
+}
+.App {
+  width: 100%;
+  position: relative;  
+}
+
+.App-logo {
+  height: 30vmin;
+  max-width: 100%;
+  position: relative;
+  margin-left: auto;
+}
+
+.App-header {
+  padding: 10vmin 10vmin 0 10vmin;
+  max-width: 100%;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+.homeIcon{
+  width: 8vmin;
+}
