@@ -1,13 +1,12 @@
 
-import React from 'react';
-import HeaderLogo from '../MYtineraryLogo.png';
+import React from 'react'
 
-function Header() {
-    return <div className="col-12" >
-    <header className="App-header">
-      <img src={HeaderLogo} className="App-logo" alt="logo"></img>
-    </header>
-    </div>;
+const Header = ({ srcLogo }) =>{
+    return( 
+        <div className="col-12 App-header" >
+            <img src={srcLogo} className="App-logo" alt="logo"></img>
+        </div>
+        ) 
 }
 
 export default Header;

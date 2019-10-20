@@ -7,14 +7,14 @@ body{
 }
 
 .App-logo {
-  height: 30vmin;
+  height: 25vmin;
   max-width: 100%;
-  position: relative;
-  margin-left: auto;
+  margin: 0 auto;
 }
 
 .App-header {
-  padding: 10vmin 10vmin 0 10vmin;
+  text-align: center;
+  padding-top: 10vmin;
   max-width: 100%;
 }
 
