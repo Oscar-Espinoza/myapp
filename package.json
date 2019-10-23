@@ -1,27 +1,29 @@
 {
-  "name": "back-end",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "concurrently \"node server.js\" \"cd client && npm start\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Oscar-Espinoza/myapp.git"
-  },
-  "author": "Oscar",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Oscar-Espinoza/myapp/issues"
-  },
-  "homepage": "https://github.com/Oscar-Espinoza/myapp#readme",
-  "dependencies": {
-    "concurrently": "^5.0.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.7.5"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.4"
-  }
+    "name": "back-end",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "concurrently \"node server.js\" \"cd client && npm start\"",
+        "dev": "nodemon server.js "
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Oscar-Espinoza/myapp.git"
+    },
+    "author": "Oscar",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Oscar-Espinoza/myapp/issues"
+    },
+    "homepage": "https://github.com/Oscar-Espinoza/myapp#readme",
+    "dependencies": {
+        "concurrently": "^5.0.0",
+        "express": "^4.17.1",
+        "mongoose": "^5.7.5",
+        "validator": "^11.1.0"
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.4"
+    }
 }
