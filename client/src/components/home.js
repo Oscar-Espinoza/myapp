@@ -1,33 +1,38 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Header from './header.js'
 import HeaderLogo from '../MYtineraryLogo.png'
 import ArrowLogo from '../arrowLogo.png'
-import homeIcon from '../homeIcon.png'
-
-const Home = () => {
-  return(
-    <div className="row ">
-      <Header srcLogo={HeaderLogo} />
-      <div className="col-12 mt-4">
-        <p className="text-center">Find your perfect trick, designed by insiders who know and love their cities </p>
-      </div>
-      <div className="col-12 text-center mt-3" >
-        <h4 className="text-center">Start browsing</h4>
-        <Link to='/cities'><img src={ArrowLogo} className="App-logo" alt="arrowLogo"></img></Link>
-        <p className="pt-4"> Want to build your own MYtinerary </p>
-      </div>
-      <div className="col-12">
-        <div className="row">
-          <div className="col-6 text-center"><a>Login</a></div>
-          <div className="col-6"><a>Create account</a></div>
+import Carousel from './carousel'
+class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      activeIndex: 0
+    }
+  }
+  onNextClick() {
+    this.setState({ activeIndex: this.state.activeIndex + 1 })
+  }
+  render() {
+    return (
+      <div className="row mx-auto" >
+        <Header srcLogo={HeaderLogo} />
+        <div className="col-12 mt-5">
+          <p className="text-center mx-auto">Find your perfect trick, designed by insiders who know and love their cities </p>
+        </div>
+        <div className="col-12 text-center mt-1" >
+          <Link to='/cities'><img src={ArrowLogo} className="arrowLogo" alt="arrowLogo"></img></Link>
+          <p className="pt-4 text-left"> Popular MYitineraries:</p>
+        </div>
+        <div className="col-12">
+          <Carousel />
         </div>
       </div>
-      <div className="fixed-bottom text-center">
-      <img src={homeIcon} className="homeIcon" alt="logo"></img>
-      </div>
-    </div>
-  )
+    )
+
+  }
+
 }
 
-export default Home
+export default Home;
