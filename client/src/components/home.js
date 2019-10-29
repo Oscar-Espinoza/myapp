@@ -16,16 +16,18 @@ class Home extends Component {
   }
   render() {
     return (
-      <div className="row mx-auto" >
+      <div className="row mx-auto w-100 h-100" >
         <Header srcLogo={HeaderLogo} />
-        <div className="col-12 mt-5">
-          <p className="text-center mx-auto">Find your perfect trick, designed by insiders who know and love their cities </p>
+        <div className="col-12">
+          
         </div>
-        <div className="col-12 text-center mt-1" >
+        <div className="col-12 text-center" >
+        <p className="text-center mx-auto">Find your perfect trick, designed by insiders who know and love their cities </p>
           <Link to='/cities'><img src={ArrowLogo} className="arrowLogo" alt="arrowLogo"></img></Link>
-          <p className="pt-4 text-left"> Popular MYitineraries:</p>
+          
         </div>
         <div className="col-12">
+        <p className="text-left"> Popular MYitineraries:</p>
           <Carousel />
         </div>
       </div>
