@@ -7,3 +7,22 @@ let faqSchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model('cities', faqSchema)
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
