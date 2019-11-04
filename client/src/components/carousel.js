@@ -7,25 +7,30 @@ const Carousel = () => {
     const [index, setIndex] = useState(0)
 
     return (
-        <div className="row h-100">
-            <Gallery 
+      <div className="row pt-5">
+        <div className="col-12">
+          <Gallery 
                 index={index}
                 onRequestChange={i => {
                     setIndex(i);
                 }}>
                 {cities.map(images => (
-                    <div className="col-12">
-                        <div className="row h-100 justify-content-center">
-                            {images.map(image => (
-                                <div className="col-6"><div className="position-absolute bg-white cityName"><h4>{image.name}</h4></div><GalleryImage style={{}} src={image.url}/></div>
-                            ))}
-                        </div>
-                    </div>
+                  <div className="row justify-content-around">
+                      {images.map(image => (
+                          <div className="col-5 pl-0 pr-0" style={{height: "150px"}}>
+                            <h4 className="position-absolute bg-white cityName">{image.name}</h4>
+                            <img src={image.url} style={{height: "120px", maxWidth: "100%"}}></img>
+                          </div>
+                      ))}
+                  </div>
                 ))}
-            </Gallery>
+            </Gallery>        
 
         </div>
+      </div>
     )
 }
 
 export default Carousel
+
+//

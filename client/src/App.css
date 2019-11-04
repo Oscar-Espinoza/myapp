@@ -34,8 +34,10 @@ html, body, #root {
 }
 
 .cityName{
-  top: 40%;
-  width: 120px;
+  top: 33%;
+  left: 10%;
+  min-width: 120px;
+  text-align: center;
 }
 
 .lds-heart {
