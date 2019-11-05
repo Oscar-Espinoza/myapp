@@ -17,17 +17,19 @@ class Home extends Component {
   render() {
     return (
       <>
-        <div className="row mx-auto pt-2 w-100" >
+      <div className="container h-100 d-flex flex-column justify-content-around ">
+        <div className="row mx-auto mt-5 pt-5" >
           <Header srcLogo={HeaderLogo} />
         </div>
 
-        <div className="row w-100">
-          <div className="col-12 text-center w-100" >
-            <p className="text-center mx-auto">Find your perfect trick, designed by insiders who know and love their cities </p>
+        <div className="row">
+          <div className="col-12 text-center pt-3" >
+            <p>Find your perfect trick, designed by insiders who know and love their cities </p>
             <Link to='/cities'><img src={ArrowLogo} className="arrowLogo" alt="arrowLogo"></img></Link>          
           </div>
         </div>
        <Carousel />
+      </div>
         
 
       </>
