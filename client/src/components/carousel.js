@@ -15,9 +15,9 @@ const Carousel = () => {
             setIndex(i);
           }}>
           {cities.map(images => (
-            <div className="row justify-content-around">
+            <div className="row justify-content-around" key = {images.index}>
               {images.map(image => (
-                <div className="col-5 pl-0 pr-0" style={{ height: "150px" }}>
+                <div className="col-5 pl-0 pr-0" style={{ height: "150px" }} key = {image.name}>
                   <h4 className="position-absolute bg-white cityName">{image.name}</h4>
                   <img src={image.url} style={{ height: "120px", maxWidth: "100%" }} alt={image.name + "image city"}></img>
                 </div>

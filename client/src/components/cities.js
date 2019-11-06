@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import {connect} from 'react-redux'
+import allCities from '../actions/citiesActions'
 import Loading from './Loading'
+
+const mapeaEstadoscomoProps = state => {
+  console.log(state)
+  return {
+      cities: state.cities
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      allCities: () => dispatch(allCities())
+  };
+};
+
+
 
 const Cities = () => {
   const [cities, setCities] = useState([])
   const [isLoading, setIsloading] = useState(false)
   
-  useEffect(() => {
+  useEffect(async () => { 
     setIsloading(true)
-    axios.get('http://localhost:5000/cities/all')
-      .then(res => {
-        console.log(res)
-        setCities(res.data)
-        setIsloading(false)
-      }).catch(err => {
-        console.log(err)
-      })
+      await allCities();
+      setCities(cities)  
   }, [])
 
   return(
@@ -30,4 +40,4 @@ const Cities = () => {
   )
 }
 
-export default Cities
+export default connect(mapeaEstadoscomoProps, mapDispatchToProps)(Cities);
