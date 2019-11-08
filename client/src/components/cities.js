@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {connect} from 'react-redux'
 import allCities from '../actions/citiesActions'
 import Loading from './Loading'
 
 const mapeaEstadoscomoProps = state => {
-  console.log(state)
   return {
-      cities: state.cities
+      cities: state.cities,
+      isLoading: state.isLoading
   }
 }
 
@@ -17,25 +17,24 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-
-const Cities = () => {
-  const [cities, setCities] = useState([])
-  const [isLoading, setIsloading] = useState(false)
-  
-  useEffect(async () => { 
-    setIsloading(true)
-      await allCities();
-      setCities(cities)  
+const Cities = props => { 
+  useEffect(() => {
+    props.allCities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps        
   }, [])
 
   return(
     <div>
-      {isLoading ? <Loading> </Loading> : console.log('rendered')}
-      <ul>
-        {cities.map(city => (
+      {props.isLoading ? 
+        <Loading> </Loading> 
+        : 
+        <ul>
+        {props.cities.map(city => (
           <li key = {city.id}>{city.name}</li>
         ))}
-      </ul>
+        </ul>
+      } 
+      
     </div>
   )
 }

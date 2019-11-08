@@ -1,5 +1,6 @@
 const initState = {
-  cities: []
+  cities: [],
+  isLoading: true
 }
 
 const rootReducer = (state = initState, action) => {
@@ -7,11 +8,8 @@ const rootReducer = (state = initState, action) => {
     case 'GET_CITIES':
       return {
         ...state,
-        cities: action.payload
+        ...action.payload 
       }
-    case 'PRUEBA': {
-      console.log(action.payload)
-    }
     default: return state  
   }
 }
