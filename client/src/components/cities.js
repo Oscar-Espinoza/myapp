@@ -18,24 +18,38 @@ const mapDispatchToProps = (dispatch) => {
 
 
 const Cities = props => { 
+
+  const handleChange = event => {
+    props.searchTerm = event.target.value
+  }
+
+  const results = props.searchTerm
+  ? props.cities
+  : props.cities.filter(city =>
+      city.toLowerCase().includes(props.searchTerm.toLowerCase())
+    )
   useEffect(() => {
     props.allCities();
     // eslint-disable-next-line react-hooks/exhaustive-deps        
   }, [])
 
   return(
-    <div>
-      {props.isLoading ? 
-        <Loading> </Loading> 
+      props.isLoading 
+        ? <Loading> </Loading> 
         : 
-        <ul>
-        {props.cities.map(city => (
-          <li key = {city.id}>{city.name}</li>
-        ))}
-        </ul>
-      } 
-      
-    </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Search"
+            value={props.searchTerm}
+            onChange={handleChange}
+          />
+          <ul>
+          {props.cities.map(city => (
+            <li key = {city.id}>{city.name}</li>
+          ))}
+          </ul>
+        </div>
   )
 }
 
