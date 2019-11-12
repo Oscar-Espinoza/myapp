@@ -1,7 +1,6 @@
 const initState = {
   cities: [],
   isLoading: true,
-  searchTerm: ''
 }
 
 const rootReducer = (state = initState, action) => {

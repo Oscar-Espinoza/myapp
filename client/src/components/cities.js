@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {connect} from 'react-redux'
 import allCities from '../actions/citiesActions'
 import Loading from './Loading'
@@ -17,19 +17,21 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-const Cities = props => { 
+const Cities = props => {
 
+  const [searchTerm, setSearchTerm] = useState("")
   const handleChange = event => {
-    props.searchTerm = event.target.value
+    setSearchTerm(event.target.value)
   }
 
-  const results = props.searchTerm
+  const results = !searchTerm
   ? props.cities
   : props.cities.filter(city =>
-      city.toLowerCase().includes(props.searchTerm.toLowerCase())
+      city.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
+    
   useEffect(() => {
-    props.allCities();
+    props.allCities();   
     // eslint-disable-next-line react-hooks/exhaustive-deps        
   }, [])
 
@@ -41,11 +43,11 @@ const Cities = props => {
           <input
             type="text"
             placeholder="Search"
-            value={props.searchTerm}
+            value={searchTerm}
             onChange={handleChange}
           />
           <ul>
-          {props.cities.map(city => (
+          {results.map(city => (
             <li key = {city.id}>{city.name}</li>
           ))}
           </ul>
@@ -54,3 +56,10 @@ const Cities = props => {
 }
 
 export default connect(mapeaEstadoscomoProps, mapDispatchToProps)(Cities);
+
+
+ // const handleChange = event => {
+  //   props.searchTerm = event.target.value
+  // }
+
+  
