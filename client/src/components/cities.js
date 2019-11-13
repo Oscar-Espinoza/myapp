@@ -57,9 +57,4 @@ const Cities = props => {
 
 export default connect(mapeaEstadoscomoProps, mapDispatchToProps)(Cities);
 
-
- // const handleChange = event => {
-  //   props.searchTerm = event.target.value
-  // }
-
   

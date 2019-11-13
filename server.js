@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-let CityModel = require('./Cities.js');
+const CityModel = require('./Cities.js');
+const ItineraryModel = require('./Itinerary')
 const dbName = "appDatabase"
 db = `mongodb+srv://Davido2094:espinoza2094@cluster0-lndmc.mongodb.net/${dbName}?retryWrites=true&w=majority`
 

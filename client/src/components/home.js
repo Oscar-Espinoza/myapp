@@ -19,7 +19,7 @@ class Home extends Component {
       <>
       <div className="container h-100 d-flex flex-column justify-content-around ">
         <div className="row mx-auto mt-5 pt-5" >
-          <Header srcLogo={HeaderLogo} />
+          <Link to='/itinerary'> <Header srcLogo={HeaderLogo} /></Link>  
         </div>
 
         <div className="row">

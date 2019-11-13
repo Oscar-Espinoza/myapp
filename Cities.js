@@ -1,12 +1,12 @@
-let mongoose = require('mongoose');
-let validator = require('validator');
+let mongoose = require('mongoose')
+let validator = require('validator')
 
-let faqSchema = new mongoose.Schema({
+let CitySchema = new mongoose.Schema({
     name: String,
     country: String
 })
 
-module.exports = mongoose.model('cities', faqSchema)
+module.exports = mongoose.model('cities', CitySchema)
 
  
  
