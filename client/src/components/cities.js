@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {connect} from 'react-redux'
 import allCities from '../actions/citiesActions'
 import Loading from './Loading'
+import { Link } from 'react-router-dom'
 
 const mapeaEstadoscomoProps = state => {
   return {
@@ -48,7 +49,7 @@ const Cities = props => {
           />
           <ul>
           {results.map(city => (
-            <li key = {city.id}>{city.name}</li>
+            <li key = {city.id}> <Link to={"/cities/" + city._id}>{city.name}</Link></li>
           ))}
           </ul>
         </div>

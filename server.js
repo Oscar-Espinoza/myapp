@@ -19,12 +19,21 @@ app.use((req, res, next) => {
     next();
 });
 
+// RUTAS
 
 app.get('/cities/all', (req, res, next) => {
     CityModel.find({}, (err, cities) => {
         res.json(cities)
     })
 });
+
+app.get('/cities/:city', (req, res, next) => {
+    CityModel.findOne({name: req.params.city}, (err, city) => {
+        res.json(city)
+    })
+});
+
+////////////////////
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
