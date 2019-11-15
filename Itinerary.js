@@ -21,7 +21,8 @@ const ItinerarySchema = new mongoose.Schema({
     type: Array
   },
   city: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'City'
     
   }
 

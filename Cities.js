@@ -6,7 +6,7 @@ let CitySchema = new mongoose.Schema({
     country: String
 })
 
-module.exports = mongoose.model('cities', CitySchema)
+module.exports = mongoose.model('City', CitySchema)
 
  
  
