@@ -20,11 +20,10 @@ const ItinerarySchema = new mongoose.Schema({
   hashtag: {
     type: Array
   },
-  city: {
-    type: String,
-    
+  _cityId: {
+    type: mongoose.Schema.Types.ObjectId,
+    unique: true    
   }
-
 })
 
 module.exports = Itinerary = mongoose.model("Itinerary", ItinerarySchema)

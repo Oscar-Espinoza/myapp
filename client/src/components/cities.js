@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 const mapeaEstadoscomoProps = state => {
   return {
-      cities: state.cities,
+      cities: state.citiesReducer.cities,
       isLoading: state.isLoading
   }
 }
