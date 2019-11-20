@@ -44,7 +44,7 @@ allCities = CityModel.find({})
       const itinerary = new ItineraryModel(
         {
           title: `Itinerario de ${city.name}`,
-          profilePic: 'https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwja3JXxnvflAhXpHbkGHd_jDK8QjRx6BAgBEAQ&url=https%3A%2F%2Fes-la.facebook.com%2FProfilePictures%2Fposts%2F&psig=AOvVaw2IlhwCG3MisWLUrUqKX5vY&ust=1574286101640468',
+          profilePic: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
           rating: 5,
           duration: 5000,
           price: 1000,
