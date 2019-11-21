@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const CityModel = require('./Cities.js');
-const ItineraryModel = require('./Itinerary')
+const CityModel = require('./models/Cities.js');
+const ItineraryModel = require('./models/Itineraries')
+const ActivityModel = require('./models/Activities')
 const dbName = "appDatabase"
 db = `mongodb+srv://Davido2094:espinoza2094@cluster0-lndmc.mongodb.net/${dbName}?retryWrites=true&w=majority`
 
@@ -28,7 +29,7 @@ app.get('/cities/all', (req, res, next) => {
 });
 
 app.get('/cities/:cityId', (req, res, next) => {
-  ItineraryModel.findOne({ _cityId: req.params.cityId }, (err, itinerary) => {
+  ItineraryModel.find({ _cityId: req.params.cityId }, (err, itinerary) => {
     res.json(itinerary)
   })
 });
@@ -37,33 +38,33 @@ app.get('/cities/:cityId', (req, res, next) => {
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-allCities = CityModel.find({})
-  .then(doc => {
-    console.log('All cities reached')    
-    doc.forEach(city => {
-      const itinerary = new ItineraryModel(
-        {
-          title: `Itinerario de ${city.name}`,
-          profilePic: 'https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png',
-          rating: 5,
-          duration: 5000,
-          price: 1000,
-          hashtag: `#${city.name}BestCity`,
-          _cityId: city._id
-        }
-      )        
-      itinerary.save()
-      .then(doc => {
-        console.log('Itinerary created')
-      })
-      .catch(err => {
-        console.log(err);
+// allCities = CityModel.find({})
+//   .then(doc => {
+//     console.log('All cities reached')    
+//     doc.forEach(city => {
+//       const itinerary = new ItineraryModel(
+//         {
+//           title: `Itinerario de ${city.name}`,
+//           profilePic: 'https://cdn130.picsart.com/289335079032211.png?r1024x1024',
+//           rating: 5,
+//           duration: 5000,
+//           price: 1000,
+//           hashtag: `#${city.name}BestCity`,
+//           _cityId: city._id
+//         }
+//       )        
+//       itinerary.save()
+//       .then(doc => {
+//         console.log('Itinerary created')
+//       })
+//       .catch(err => {
+//         console.log(err);
         
-      })            
-    });
-  }).catch(err => {
-    console.error(err)
-  })
+//       })            
+//     });
+//   }).catch(err => {
+//     console.error(err)
+//   })
 
 
 //////////////////////////////////////////////////////////////////
@@ -79,11 +80,47 @@ mongoose
   });
 
 
-
+  
+  const activities = [
+    {title: 'Walk for center city', info: 'Join to a group to walk by city', _cityId: ''}, 
+    {title: 'Explore the central market', info: 'Explore the famous central Market', _cityId: ''}, 
+    {title: 'Lourve museum', info: 'Visit the famous Lourve with us', _cityId: ''}, 
+    {title: 'Rome Coliseum', info: 'Know the great Roman Coliseum', _cityId: ''}, 
+    {title: 'Eiffel Tower', info: 'If you come to Paris you have to visit the Eiffel Tower', _cityId: ''}, 
+    {title: 'Bear fest', info: 'Famous bear fest', _cityId:'' }, 
+    {title: 'Restaurant', info: 'Visit this famous Restaurant', _cityId: ''},
+    {title: 'Walk for center city', info: 'Join to a group to walk by city', _cityId: ''}, 
+    {title: 'Explore the central market', info: 'Explore the famous central Market', _cityId: ''}, 
+    {title: 'Lourve museum', info: 'Visit the famous Lourve with us', _cityId: ''}, 
+    {title: 'Rome Coliseum', info: 'Know the great Roman Coliseum', _cityId: ''}, 
+    {title: 'Eiffel Tower', info: 'If you come to Paris you have to visit the Eiffel Tower', _cityId: ''}, 
+    {title: 'Bear fest', info: 'Famous bear fest', _cityId: ''}, 
+    {title: 'Restaurant', info: 'Visit this famous Restaurant', _cityId: ''},
+    {title: 'Walk for center city', info: 'Join to a group to walk by city', _cityId: ''}, 
+    {title: 'Explore the central market', info: 'Explore the famous central Market', _cityId: ''}, 
+    {title: 'Lourve museum', info: 'Visit the famous Lourve with us', _cityId: ''}, 
+    {title: 'Rome Coliseum', info: 'Know the great Roman Coliseum', _cityId: ''}, 
+    {title: 'Eiffel Tower', info: 'If you come to Paris you have to visit the Eiffel Tower', _cityId:'' }, 
+    {title: 'Bear fest', info: 'Famous bear fest', _cityId:'' }
+    ]
 
     
-
-
+    ///////////////////////////////////////
+    
+    // CityModel.find({})
+    // .then(cities =>{
+    //   cities.forEach((city, index) => {
+    //     const activity = new ActivityModel({
+    //       ...activities[index],
+    //       _cityId: city._id
+    //     })
+    //     activity.save()
+    //     .then(() => {
+    //       console.log('Activity Created!')
+    //     })        
+    //   });
+    // }) 
+    
 // const cities = [
 //     {name: 'London', country: 'UK'}, 
 //     {name: 'Berlin', country: 'Germany'}, 
