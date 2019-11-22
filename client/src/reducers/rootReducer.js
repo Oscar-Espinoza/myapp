@@ -1,17 +1,8 @@
-const initState = {
-  cities: [],
-  isLoading: true,
-}
+import citiesReducer from './citiesReducer'
+import itinerariesReducer from './itinerariesReducer'
+import { combineReducers } from 'redux'
 
-const rootReducer = (state = initState, action) => {
-  switch(action.type){
-    case 'GET_CITIES':
-      return {
-        ...state,
-        ...action.payload 
-      }
-    default: return state  
-  }
-}
-
-export default rootReducer
+export default combineReducers({
+    citiesReducer,
+    itinerariesReducer 
+})

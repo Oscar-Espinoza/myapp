@@ -1,5 +1,5 @@
-let mongoose = require('mongoose')
-let validator = require('validator')
+const mongoose = require('mongoose')
+const validator = require('validator')
 
 const ItinerarySchema = new mongoose.Schema({
   title: {
@@ -20,16 +20,11 @@ const ItinerarySchema = new mongoose.Schema({
   hashtag: {
     type: Array
   },
-<<<<<<< HEAD
-  city: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'City'
-    
-=======
   _cityId: {
-    type: mongoose.Schema.Types.ObjectId,
-    unique: true    
->>>>>>> 3dbbcfb0843d9afe97a96cfee8d8da5b5cb50d7b
+    type: mongoose.Schema.Types.ObjectId
+  },
+  activities: {
+    type: Array
   }
 })
 
