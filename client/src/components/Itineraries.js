@@ -3,6 +3,7 @@ import Loading from './Loading'
 import { connect } from 'react-redux'
 import getItineraries from '../actions/itinerariesActions'
 import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 const Itinerary = props => { 
@@ -18,7 +19,7 @@ const Itinerary = props => {
       {props.itineraries.map((itinerary, index) => (
           <div className="col-10">
           <h2>Itinerary #{index + 1}</h2>
-          <img src={`${itinerary.profilePic}`} alt="" style={{width: '100px'}} />
+          <Link to={`/Itineraries/${itinerary._id}`}><img src={`${itinerary.profilePic}`} alt="" style={{width: '100px'}} /></Link>  
           </div>        
       ))}      
     </div>
