@@ -34,7 +34,17 @@ app.get('/cities/:cityId', (req, res, next) => {
   })
 });
 
-//////////////////////////////////////////////////////////////////
+app.get('/Itineraries/:itineraryId', (req, res, next) => {
+  ItineraryModel.findOne({ _id: req.params.itineraryId }, (err, itinerary) => {
+    res.json(itinerary)
+  })
+});
+
+app.get('/Itineraries/:itineraryId/activities', (req, res, next) => {
+  ItineraryModel.find({ _id: req.params.itineraryId }, (err, itinerary) => {
+    res.json(itinerary)
+  })
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
@@ -68,7 +78,7 @@ function SeedActivitiesInItineraries(){
     .then(itineraries => {
       itineraries.forEach(itinerary => {
         itinerary.update({
-          activities: 
+          activities: []
         })
       })
     })
@@ -127,6 +137,24 @@ function SeedItinerariess() {
     })
 }
 
+function SeedCities() {
+  cities.forEach(city => {
+    const msg = new CityModel({
+      name: city.name,
+      country: city.country
+    })
+
+    msg.save()
+      .then(doc => {
+        console.log(doc)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  });
+}
+
+
 // const cities = [
 //     {name: 'London', country: 'UK'}, 
 //     {name: 'Berlin', country: 'Germany'}, 
@@ -149,26 +177,6 @@ function SeedItinerariess() {
 //     {name: 'Copenhagen', country: 'Denmark'},
 //     {name: 'Oslo', country: 'Norway'}
 //     ]
-
-function SeedCities() {
-  cities.forEach(city => {
-    const msg = new CityModel({
-      name: city.name,
-      country: city.country
-    })
-
-    msg.save()
-      .then(doc => {
-        console.log(doc)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  });
-}
-
-
-
 
 
 // CityModel.findOneAndUpdate({

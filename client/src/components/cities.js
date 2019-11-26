@@ -49,7 +49,7 @@ const Cities = props => {
           />
           <ul>
           {results.map(city => (
-            <li key = {city.id}> <Link to={"/cities/" + city._id}>{city.name}</Link></li>
+            <li key = {city._id}> <Link to={`/cities/${city._id}/Itineraries`}>{city.name}</Link></li>           
           ))}
           </ul>
         </div>
