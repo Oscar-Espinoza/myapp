@@ -14,7 +14,7 @@ const Activities = props => {
     props.isLoading ? <Loading></Loading>
       :
       <div className="row">
-        {props.activities.map((activity, index) => (
+        {props.itinerary.activities.map((activity, index) => (
           <div className="col-10">
             <h1>Activity #{index + 1}</h1>
             <h2>{activity.title}</h2>
@@ -26,9 +26,8 @@ const Activities = props => {
 
 const mapeaEstadoscomoProps = state => {
   return {
-    itineraries: state.itinerariesReducer.itineraries,
+    itinerary: state.activitiesReducer.itinerary,
     isLoading: state.activitiesReducer.isLoading,
-    activities: state.activitiesReducer.activities
   }
 }
 

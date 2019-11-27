@@ -34,16 +34,23 @@ app.get('/cities/:cityId', (req, res, next) => {
   })
 });
 
+app.get('/Itineraries', (req, res, next) => {
+  ItineraryModel.find({}, (err, itineraries) => {
+    res.json(itineraries)
+  })
+});
+
 app.get('/Itineraries/:itineraryId', (req, res, next) => {
   ItineraryModel.findOne({ _id: req.params.itineraryId }, (err, itinerary) => {
     res.json(itinerary)
   })
 });
 
-app.get('/Activities/:itineraryId', (req, res, next) => {
-  console.log((req.params.itineraryId))
-  ActivityModel.find({ itineraries: req.params.itineraryId}, (err, activities) => {
-    res.json(activities)
+app.get('/:itineraryId/activities', (req, res, next) => {
+  ItineraryModel.findOne({ _id: req.params.itineraryId })
+  .populate('activities')
+  .exec((err, itineraryWithActivities) => {
+    res.json(itineraryWithActivities)
   })
 });
 
@@ -64,34 +71,26 @@ mongoose
 
 
 //SeedActivitiesInItineraries()
-//cleanActivities()
-
-function cleanActivities(){
-  ActivityModel.find({})
-  .then(activities => {
-    activities.forEach((activity, index) => {
-      activity.itineraries = []
-      activity.save()
-      console.log(index)
-    })
-  })
-}
+//SeedActivities()
+//SeedItineraries()
 
 function SeedActivitiesInItineraries(){
   ItineraryModel.find({})
     .then(itineraries => {
+      console.log("Itineraries Reached")
       itineraries.forEach((itinerary, itIndex) => {
         activitiesForItinerary = ActivityModel.find({ _cityId: itinerary._cityId})
         .then(activities => {
+          console.log('Activities Reached')
           activities.forEach((activity, actIndex) => {
             const random = Math.floor(Math.random() * 5)
             if (random != 0) {
-              activity.itineraries.push(itinerary._id)
-              activity.save()
-              console.log(`Se añadio a itinerario ${itIndex} a actividad ${actIndex}`)
+              itinerary.activities.push(activity._id)
+              console.log(`Se añadio al itinerario #${itIndex} la actividad #${actIndex}`)
             }
           })
         })
+        itinerary.save()
       })
     })
 }
@@ -118,10 +117,10 @@ function SeedActivities() {
     })
 }
 
-//SeedActivities()
 
 
-function SeedItinerariess() {
+
+function SeedItineraries() {
   allCities = CityModel.find({})
     .then(doc => {
       console.log('All cities reached')
