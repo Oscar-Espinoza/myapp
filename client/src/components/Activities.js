@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Loading from './Loading'
 import { connect } from 'react-redux'
-import getActivities from '../actions/citiesActions.js'
+import getActivities from '../actions/activitiesActions.js'
 import { useParams } from 'react-router-dom'
 
 const Activities = props => {
@@ -14,7 +14,7 @@ const Activities = props => {
     props.isLoading ? <Loading></Loading>
       :
       <div className="row">
-        {props.itinerary.activities.map((activity, index) => (
+        {props.activities.map((activity, index) => (
           <div className="col-10">
             <h1>Activity #{index + 1}</h1>
             <h2>{activity.title}</h2>
@@ -27,7 +27,8 @@ const Activities = props => {
 const mapeaEstadoscomoProps = state => {
   return {
     itineraries: state.itinerariesReducer.itineraries,
-    isLoading: state.itinerariesReducer.isLoading
+    isLoading: state.activitiesReducer.isLoading,
+    activities: state.activitiesReducer.activities
   }
 }
 
