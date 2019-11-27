@@ -4,7 +4,8 @@ const initState = {
     activities: []
   }
   
-  const itineraryReducer = (state = initState, action) => {
+  const activityReducer = (state = initState, action) => {
+    console.log(action)
     switch(action.type){
       case 'GET_ACTIVITIES':
         return {
@@ -15,4 +16,4 @@ const initState = {
     }
   }
   
-  export default itineraryReducer
+  export default activityReducer
