@@ -9,6 +9,9 @@ const ActivitySchema = new mongoose.Schema({
   },
   _cityId: {
     type: mongoose.Schema.Types.ObjectId
+  },
+  itineraries : {
+    type: Array
   }
 })
 

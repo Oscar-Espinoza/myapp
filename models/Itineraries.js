@@ -22,9 +22,6 @@ const ItinerarySchema = new mongoose.Schema({
   },
   _cityId: {
     type: mongoose.Schema.Types.ObjectId
-  },
-  activities: {
-    type: Array
   }
 })
 
