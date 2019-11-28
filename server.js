@@ -117,9 +117,6 @@ function SeedActivities() {
     })
 }
 
-
-
-
 function SeedItineraries() {
   allCities = CityModel.find({})
     .then(doc => {
