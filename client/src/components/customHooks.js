@@ -1,6 +1,6 @@
 import React from 'react';
 
-const useSignUpForm = () => {
+const userSignUpForm = () => {
   return null;
 }
-export default useSignUpForm;
+export default userSignUpForm;

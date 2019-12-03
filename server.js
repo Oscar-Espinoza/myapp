@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const CityModel = require('./models/Cities.js');
 const ItineraryModel = require('./models/Itineraries')
 const ActivityModel = require('./models/Activities')
+const UserModel = require('./models/Users.js')
 const dbName = "appDatabase"
 db = `mongodb+srv://Davido2094:espinoza2094@cluster0-lndmc.mongodb.net/${dbName}?retryWrites=true&w=majority`
 
@@ -21,6 +22,10 @@ app.use((req, res, next) => {
 });
 
 // RUTAS
+
+app.post('/user', (req, res)=> {
+  res.json({'User': 'created'})
+}) 
 
 app.get('/cities/all', (req, res, next) => {
   CityModel.find({}, (err, cities) => {
