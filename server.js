@@ -24,7 +24,14 @@ app.use((req, res, next) => {
 // RUTAS
 
 app.post('/user', (req, res)=> {
-  res.json({'User': 'created'})
+  res.json(req.body)
+  NewUser = new UserModel(req.body)
+  NewUser.save()
+  .then(()=> console.log('User created successfully'))
+})
+
+app.post('/userLogin', (req, res)=> {
+  res.json(req.body)
 }) 
 
 app.get('/cities/all', (req, res, next) => {

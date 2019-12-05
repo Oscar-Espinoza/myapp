@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 const CreateAccount = () => {
   const initState = {
@@ -12,9 +13,9 @@ const CreateAccount = () => {
     city: 'Choose',
     agreeLicense: 'false'
   }
-  const handleSubmit = (event) =>{
+  const handleSubmit = async event =>{
     event.preventDefault()
-    //createAccount(values)
+    await axios.post('http://localhost:5000/user', values).then(res => console.log(res))
     setValues(initState)
   }
   const [values, setValues] = useState(initState)
@@ -26,8 +27,6 @@ const CreateAccount = () => {
       ...values, 
       [event.target.name]: target.value
     })
-    console.log(`Campo: ${target.name}
-    value: ${target.value}`)
   } 
     return (
         <form onSubmit={handleSubmit}>
