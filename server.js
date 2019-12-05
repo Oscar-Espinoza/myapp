@@ -5,6 +5,7 @@ const CityModel = require('./models/Cities.js');
 const ItineraryModel = require('./models/Itineraries')
 const ActivityModel = require('./models/Activities')
 const UserModel = require('./models/Users.js')
+const bcrypt=require('bcryptjs');
 const dbName = "appDatabase"
 db = `mongodb+srv://Davido2094:espinoza2094@cluster0-lndmc.mongodb.net/${dbName}?retryWrites=true&w=majority`
 
@@ -24,8 +25,13 @@ app.use((req, res, next) => {
 // RUTAS
 
 app.post('/user', (req, res)=> {
-  res.json(req.body)
-  NewUser = new UserModel(req.body)
+  const userData = req.body;
+  var salt = bcrypt.genSaltSync(10);
+  var hashPassword = bcrypt.hashSync(userData.password, salt);
+  NewUser = new UserModel({
+    ...userData,
+    password: hashPassword
+  })
   NewUser.save()
   .then(()=> console.log('User created successfully'))
 })
