@@ -1,8 +1,7 @@
 const getActivities = (itineraryId) => async (dispatch, getState) => {
-  console.log(itineraryId);
-    const response = await fetch(`http://localhost:5000/Activities/${itineraryId}`).then(resp => resp.json());
-    console.log(response)
-    dispatch({ type: 'GET_ACTIVITIES', payload: { activities: response, isLoading: false } })
+  dispatch({ type: 'GET_ACTIVITIES', payload: { isLoading: true } })
+    const response = await fetch(`http://localhost:5000/${itineraryId}/activities`).then(resp => resp.json());
+    dispatch({ type: 'GET_ACTIVITIES', payload: { itinerary: response, isLoading: false } })
   }
 
 export default getActivities

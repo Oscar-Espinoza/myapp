@@ -22,7 +22,11 @@ const ItinerarySchema = new mongoose.Schema({
   },
   _cityId: {
     type: mongoose.Schema.Types.ObjectId
-  }
+  },
+  activities: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'activities'
+  }]
 })
 
-module.exports = Itinerary = mongoose.model("Itinerary", ItinerarySchema)
+module.exports = Itinerary = mongoose.model("itinerary", ItinerarySchema)
