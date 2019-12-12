@@ -4,8 +4,7 @@ import axios from 'axios'
 const CreateAccount = () => {
   const initState = {
     email: '',
-    password1: '',
-    password2: '',
+    password: '',
     loginErrors: ''
   }
   const handleSubmit = async event =>{

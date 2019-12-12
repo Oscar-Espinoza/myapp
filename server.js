@@ -8,9 +8,11 @@ const UserModel = require('./models/Users.js')
 const bcrypt=require('bcryptjs');
 const dbName = "appDatabase"
 db = `mongodb+srv://Davido2094:espinoza2094@cluster0-lndmc.mongodb.net/${dbName}?retryWrites=true&w=majority`
-
+const key = require("./config")
+const jwt = require("jsonwebtoken");
 const app = express();
 const port = process.env.PORT || 5000;
+const passport = require('passport')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,21 +25,60 @@ app.use((req, res, next) => {
 });
 
 // RUTAS
+app.use(passport.initialize())
 
 app.post('/user', (req, res)=> {
-  const userData = req.body;
-  var salt = bcrypt.genSaltSync(10);
-  var hashPassword = bcrypt.hashSync(userData.password, salt);
+  const userData = req.body
+  const salt = bcrypt.genSaltSync(10)
+  const hashPassword = bcrypt.hashSync(userData.password1, salt)
   NewUser = new UserModel({
     ...userData,
-    password: hashPassword
+    password1: hashPassword
   })
   NewUser.save()
   .then(()=> console.log('User created successfully'))
-})
+ })
 
 app.post('/userLogin', (req, res)=> {
-  res.json(req.body)
+  UserModel.find({ email: req.body.email})
+  .exec()
+  .then(user => {
+    if (user.length > 1) {
+      return res.status(404).json({
+        message: 'Auth failed no email'
+      })
+    } else {
+      bcrypt.compare(req.body.password1, user[0].password1, (err, result) => {
+        if (err) {
+          return res.status(401).json({
+            message: 'Auth failed password'
+          })
+        }
+        if (result) {
+          const payload = 
+            {
+              username: user[0].username,
+              userId: user[0]._id,
+            }
+          const token = jwt.sign(
+            payload,
+            key.secretOrKey,
+            {expiresIn: "1h"}
+          )
+          return res.status(200).json({
+            message: 'Auth successful',
+            token: token
+          })
+        }
+      })
+    }    
+  })
+  .catch(err => {
+    console.log(err)
+    res.status(500).json({
+      error: err
+    })
+  })
 }) 
 
 app.get('/cities/all', (req, res, next) => {
