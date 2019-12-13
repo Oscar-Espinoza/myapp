@@ -18,9 +18,18 @@ module.exports = passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:5000/auth/google/callback"
   },
   (token, tokenSecret, profile, done) => {
-      console.log(profile)
       User.findOne({ googleId: profile.id }, function (err, user) {
-        return done(err, user);
+        if (user) {
+          console.log(`user is: ${user}`)
+        } else {
+          new User({
+            username: profile.displayName,
+            firstname: profile.name.givenName,
+            lastname: profile.name.familyName,
+            agreeLicense: true,
+            googleId: profile.id
+          })
+        }
       });
   }
 ));
