@@ -34,6 +34,10 @@ let UsersSchema = new mongoose.Schema({
     },
     agreeLicense: {
         type: Boolean
+    },
+    googleId : {
+        type: String,
+        unique: true
     }
 })
 

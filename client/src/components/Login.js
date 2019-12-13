@@ -23,6 +23,7 @@ const CreateAccount = () => {
     })
   } 
     return (
+      <>
         <form onSubmit={handleSubmit}>
           <div className="form-group row">
             <label className="col-3 col-form-label">Email Address</label>
@@ -41,7 +42,11 @@ const CreateAccount = () => {
           </div>          
           <button type="submit">Login</button>
         </form>
-        
+
+      <button onClick={() => {
+        window.location.href = "http://localhost:5000/auth/google"
+      }}>Sign In with Google</button>
+    </>
       )
 
     

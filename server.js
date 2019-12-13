@@ -6,6 +6,7 @@ const ItineraryModel = require('./models/Itineraries')
 const ActivityModel = require('./models/Activities')
 const UserModel = require('./models/Users.js')
 const bcrypt=require('bcryptjs');
+const router = express.Router()
 const dbName = "appDatabase"
 db = `mongodb+srv://Davido2094:espinoza2094@cluster0-lndmc.mongodb.net/${dbName}?retryWrites=true&w=majority`
 const key = require("./config")
@@ -13,6 +14,7 @@ const jwt = require("jsonwebtoken");
 const app = express();
 const port = process.env.PORT || 5000;
 const passport = require('passport')
+require('./passportConfig')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,6 +29,29 @@ app.use((req, res, next) => {
 // RUTAS
 app.use(passport.initialize())
 
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    userModel
+      .findOne({ _id: req.user.id })
+      .then(user => {
+        res.json(user);
+      })
+      .catch(err => res.status(404).json({ error: "User does not exist!" }));
+  }
+)
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('http://localhost:3000');
+  });
+
 app.post('/user', (req, res)=> {
   const userData = req.body
   const salt = bcrypt.genSaltSync(10)
@@ -38,6 +63,7 @@ app.post('/user', (req, res)=> {
   NewUser.save()
   .then(()=> console.log('User created successfully'))
  })
+ 
 
 app.post('/userLogin', (req, res)=> {
   UserModel.find({ email: req.body.email})
@@ -79,7 +105,13 @@ app.post('/userLogin', (req, res)=> {
       error: err
     })
   })
-}) 
+})
+
+app.get('/users', (req, res, next) => {
+  UserModel.find({}, (err, users) => {
+    res.json(users[0])
+  })
+});
 
 app.get('/cities/all', (req, res, next) => {
   CityModel.find({}, (err, cities) => {
