@@ -9,7 +9,7 @@ const bcrypt=require('bcryptjs');
 const router = express.Router()
 const dbName = "appDatabase"
 db = `mongodb+srv://Davido2094:espinoza2094@cluster0-lndmc.mongodb.net/${dbName}?retryWrites=true&w=majority`
-const key = require("./config")
+const config = require("./config")
 const jwt = require("jsonwebtoken");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -45,7 +45,7 @@ router.get(
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile'] }));
 
-app.get('/auth/google/callback', 
+  app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login' }),
   function(req, res) {
     res.redirect('http://localhost:3000/');
@@ -60,7 +60,26 @@ app.post('/user', (req, res)=> {
     password1: hashPassword
   })
   NewUser.save()
-  .then(()=> console.log('User created successfully'))
+  .then(()=> {
+    const payload = 
+    {
+      username: NewUser.username,
+      userId: NewUser._id,
+    }
+    const token = jwt.sign(
+      payload,
+      config.secretOrKey,
+      {expiresIn: "1h"}
+    )
+    console.log('User created successfully')
+    return res.status(200).json({
+      Regmessage: 'User register was successful',
+      newUser: NewUser,
+      Authmessage: 'Auth successful',
+      token: token
+    })
+    
+  })
  })
  
 
@@ -87,7 +106,7 @@ app.post('/userLogin', (req, res)=> {
             }
           const token = jwt.sign(
             payload,
-            key.secretOrKey,
+            config.secretOrKey,
             {expiresIn: "1h"}
           )
           return res.status(200).json({

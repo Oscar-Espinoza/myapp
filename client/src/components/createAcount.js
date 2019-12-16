@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import jwt_decode from 'jwt-decode'
 
 const CreateAccount = () => {
   const initState = {
@@ -15,8 +16,14 @@ const CreateAccount = () => {
   }
   const handleSubmit = async event =>{
     event.preventDefault()
-    await axios.post('http://localhost:5000/user', values).then(res => console.log(res))
-    setValues(initState)
+    await axios.post('http://localhost:5000/user', values)
+      .then(res => {
+        localStorage.setItem('token', res.data.token)
+        setValues(initState)       
+      }).catch(err => console.log(err));
+    console.log(localStorage.getItem('token'))
+    const decoded = jwt_decode(localStorage.getItem('token'));
+    console.log(decoded);   
   }
   const [values, setValues] = useState(initState)
 
@@ -105,7 +112,7 @@ const CreateAccount = () => {
             </div>
           </div>
           
-          <button type="submit">OK</button>
+          <button type="submit">Create account</button>
         </form>
         
       )

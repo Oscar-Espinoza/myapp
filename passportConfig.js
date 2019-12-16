@@ -18,35 +18,38 @@ module.exports = passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:5000/auth/google/callback"
   },
   (token, tokenSecret, profile, done) => {
-      User.findOne({ googleId: profile.id }, function (err, user) {
+      User.findOne({ googleId: profile.id }, async function (err, user) {
         if (user) {
           console.log(`user is: ${user}`)
+          return done(err, user);
         } else {
-          new User({
+          await new User({
             username: profile.displayName,
             firstname: profile.name.givenName,
             lastname: profile.name.familyName,
             agreeLicense: true,
             googleId: profile.id
-          })
+          }).save()
+          return done(err, user);
         }
       });
+      
   }
 ));
 
-// module.exports = passport.use(
-//     new JwtStrategy(opts, (jwt_payload, done) => {
-//         User.findById(jwt_payload._id)
-//         .then(user => {
-//           if (err) {
-//             return done(err, false);
-//         }
-//         if (user) {
-//             return done(null, user);
-//         } else {
-//             return done(null, false);
-//         }
-//         })
-//         .catch(err => console.log(err));
-//     })
-//   );
+module.exports = passport.use(
+    new JwtStrategy(opts, (jwt_payload, done) => {
+        User.findById(jwt_payload._id)
+        .then(user => {
+          if (err) {
+            return done(err, false);
+        }
+        if (user) {
+            return done(null, user);
+        } else {
+            return done(null, false);
+        }
+        })
+        .catch(err => console.log(err));
+    })
+  );

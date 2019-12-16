@@ -1,5 +1,4 @@
 let mongoose = require('mongoose')
-let validator = require('validator')
 
 let UsersSchema = new mongoose.Schema({
     profilePic: {
@@ -30,10 +29,6 @@ let UsersSchema = new mongoose.Schema({
     },
     agreeLicense: {
         type: Boolean
-    },
-    googleId : {
-        type: String,
-        unique: true
     }
 })
 
