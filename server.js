@@ -15,6 +15,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const passport = require('passport')
 require('./passportConfig')
+const redis =  require('redis')
+const execFile = require('child_process')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,12 +45,16 @@ router.get(
 )
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+  passport.authenticate('google', { scope: ['profile','email'] }));
 
   app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000/login' }),
-  function(req, res) {
-    res.redirect('http://localhost:3000/');
+  passport.authenticate('google', {session: false, failureRedirect: 'http://localhost:3000' }),
+  async function(req, res) {
+    console.log(req.user)
+    const token = jwt.sign({
+      id: req.user._id,
+    }, "Secret123456", { expiresIn: '20m' })
+    res.redirect(`http://localhost:3000/loaduser/${token}`);
   });
 
 app.post('/user', (req, res)=> {
@@ -84,15 +90,20 @@ app.post('/user', (req, res)=> {
  
 
 app.post('/userLogin', (req, res)=> {
-  UserModel.find({ email: req.body.email})
+  if (req.body.token) {
+    return res.status(404).json({
+      message: 'A user is already logged in'
+    })
+  } else {
+    UserModel.find({ email: req.body.email})
   .exec()
-  .then(user => {
-    if (user.length > 1) {
+  .then(users => {
+    if (users.length < 1) {
       return res.status(404).json({
         message: 'Auth failed no email'
       })
     } else {
-      bcrypt.compare(req.body.password1, user[0].password1, (err, result) => {
+      bcrypt.compare(req.body.password1, users[0].password1, (err, result) => {
         if (err) {
           return res.status(401).json({
             message: 'Auth failed password'
@@ -101,8 +112,8 @@ app.post('/userLogin', (req, res)=> {
         if (result) {
           const payload = 
             {
-              username: user[0].username,
-              userId: user[0]._id,
+              username: users[0].username,
+              userId: users[0]._id,
             }
           const token = jwt.sign(
             payload,
@@ -115,7 +126,8 @@ app.post('/userLogin', (req, res)=> {
           })
         }
       })
-    }    
+    }
+       
   })
   .catch(err => {
     console.log(err)
@@ -123,6 +135,8 @@ app.post('/userLogin', (req, res)=> {
       error: err
     })
   })
+  }
+  
 })
 
 app.get('/users', (req, res, next) => {

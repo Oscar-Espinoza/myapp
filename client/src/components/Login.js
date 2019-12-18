@@ -4,12 +4,20 @@ import axios from 'axios'
 const CreateAccount = () => {
   const initState = {
     email: '',
-    password: '',
+    password1: '',
     loginErrors: ''
+  }
+  const logout = () => {
+    localStorage.removeItem('token')
+    console.log('logged out')
   }
   const handleSubmit = async event =>{
     event.preventDefault()
-    await axios.post('http://localhost:5000/userLogin', values).then(res => console.log(res))
+    await axios.post('http://localhost:5000/userLogin', {...values, token: localStorage.getItem('token')})
+      .then(res => {
+        console.log(res.data.message)
+        localStorage.setItem('token', res.data.token)
+      })
     setValues(initState)
   }
   const [values, setValues] = useState(initState)
@@ -46,6 +54,7 @@ const CreateAccount = () => {
       <button onClick={() => {
         window.location.href = "http://localhost:5000/auth/google"
       }}>Sign In with Google</button>
+      <button onClick={logout}>Logout</button>
     </>
       )
 

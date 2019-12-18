@@ -17,20 +17,24 @@ module.exports = passport.use(new GoogleStrategy({
     clientSecret: config.web.client_secret,
     callbackURL: "http://localhost:5000/auth/google/callback"
   },
-  (token, tokenSecret, profile, done) => {
-      User.findOne({ googleId: profile.id }, async function (err, user) {
+  (accessToken, refreshToken, profile, done) => {
+    console.log(profile._json.email)
+    console.log(profile)
+      User.findOne({ email: profile._json.email }, (err, user) => {        
         if (user) {
-          console.log(`user is: ${user}`)
-          return done(err, user);
+          return done(err, user);          
         } else {
-          await new User({
+          user = new User({
             username: profile.displayName,
             firstname: profile.name.givenName,
             lastname: profile.name.familyName,
+            email: profile._json.email,
             agreeLicense: true,
             googleId: profile.id
-          }).save()
-          return done(err, user);
+          })
+          user.save((err) => {
+            return done(err, user);
+          })
         }
       });
       

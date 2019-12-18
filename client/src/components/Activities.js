@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import getActivities from '../actions/activitiesActions.js'
 import { useParams } from 'react-router-dom'
 
+
 const Activities = props => {
   const { itineraryId } = useParams()
   useEffect(() => {
@@ -11,7 +12,8 @@ const Activities = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps        
   }, [])
   return (
-    props.isLoading ? <Loading></Loading>
+  <>
+    {props.isLoading ? <Loading></Loading>
       :
       <div className="row">
         {props.itinerary.activities.map((activity, index) => (
@@ -19,8 +21,11 @@ const Activities = props => {
             <h1>Activity #{index + 1}</h1>
             <h2>{activity.title}</h2>
           </div>
-        ))}
+        ))} 
+        {/* <button onClick={addToFav}>add to fav</button>       */}
       </div>
+    }
+    </>
   )
 }
 

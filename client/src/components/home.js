@@ -4,6 +4,14 @@ import Header from './header.js'
 import HeaderLogo from '../MYtineraryLogo.png'
 import ArrowLogo from '../arrowLogo.png'
 import Carousel from './carousel'
+let loggedIn = localStorage.getItem('token')
+let url = ''
+
+if (loggedIn) {
+  url = '/cities'
+} else {
+  url = '/mytinerary'
+}
 
 class Home extends Component {
   constructor() {
@@ -20,7 +28,7 @@ class Home extends Component {
       <>
       <div className="container h-100 d-flex flex-column justify-content-around ">
         <div className="row mx-auto" >
-          <Link to='/mytinerary'> <Header srcLogo={HeaderLogo} /></Link>  
+          <Link to={url}> <Header srcLogo={HeaderLogo} /></Link>  
         </div>
 
         <div className="row">
