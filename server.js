@@ -49,13 +49,13 @@ app.get('/auth/google',
 
   app.get('/auth/google/callback', 
   passport.authenticate('google', {session: false, failureRedirect: 'http://localhost:3000' }),
-  async function(req, res) {
-    console.log(req.user)
+  async (req, res) => {
     const token = jwt.sign({
       id: req.user._id,
     }, "Secret123456", { expiresIn: '20m' })
     res.redirect(`http://localhost:3000/loaduser/${token}`);
   });
+
 
 app.post('/user', (req, res)=> {
   const userData = req.body

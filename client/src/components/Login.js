@@ -1,22 +1,21 @@
 import React, { useState } from 'react'
+import {connect} from 'react-redux'
 import axios from 'axios'
+import { logOut, logIn } from '../actions/sessionActions'
 
-const CreateAccount = () => {
+const CreateAccount = (props) => {
+  console.log(props)
   const initState = {
     email: '',
     password1: '',
     loginErrors: ''
-  }
-  const logout = () => {
-    localStorage.removeItem('token')
-    console.log('logged out')
   }
   const handleSubmit = async event =>{
     event.preventDefault()
     await axios.post('http://localhost:5000/userLogin', {...values, token: localStorage.getItem('token')})
       .then(res => {
         console.log(res.data.message)
-        localStorage.setItem('token', res.data.token)
+        props.logIn(res.data.token)
       })
     setValues(initState)
   }
@@ -54,12 +53,24 @@ const CreateAccount = () => {
       <button onClick={() => {
         window.location.href = "http://localhost:5000/auth/google"
       }}>Sign In with Google</button>
-      <button onClick={logout}>Logout</button>
+      <button onClick={props.logOut}>Logout</button>
     </>
       )
 
     
       
     }
+    const mapeaEstadoscomoProps = state => {
+      return {
+          loggedIn: state.sessionReducer.loggedIn
+      }
+    }
 
-export default CreateAccount
+    const mapDispatchToProps = (dispatch) => {
+      return {
+          logOut: () => dispatch(logOut()),
+          logIn: (token) => dispatch(logIn(token))
+      };
+    };
+
+    export default connect(mapeaEstadoscomoProps, mapDispatchToProps)(CreateAccount);

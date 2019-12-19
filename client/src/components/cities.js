@@ -4,19 +4,6 @@ import allCities from '../actions/citiesActions'
 import Loading from './Loading'
 import { Link } from 'react-router-dom'
 
-const mapeaEstadoscomoProps = state => {
-  return {
-      cities: state.citiesReducer.cities,
-      isLoading: state.isLoading
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-      allCities: () => dispatch(allCities())
-  };
-};
-
 
 const Cities = props => {
 
@@ -55,6 +42,19 @@ const Cities = props => {
         </div>
   )
 }
+
+const mapeaEstadoscomoProps = state => {
+  return {
+      cities: state.citiesReducer.cities,
+      isLoading: state.isLoading
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      allCities: () => dispatch(allCities())
+  };
+};
 
 export default connect(mapeaEstadoscomoProps, mapDispatchToProps)(Cities);
 
