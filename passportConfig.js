@@ -18,8 +18,6 @@ module.exports = passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:5000/auth/google/callback"
   },
   (accessToken, refreshToken, profile, done) => {
-    console.log(profile._json.email)
-    console.log(profile)
       User.findOne({ email: profile._json.email }, (err, user) => {        
         if (user) {
           return done(err, user);          

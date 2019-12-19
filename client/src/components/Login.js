@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
-import { logOut, logIn } from '../actions/sessionActions'
+import {logIn } from '../actions/sessionActions'
 
 const CreateAccount = (props) => {
-  console.log(props)
   const initState = {
     email: '',
     password1: '',
@@ -14,7 +13,6 @@ const CreateAccount = (props) => {
     event.preventDefault()
     await axios.post('http://localhost:5000/userLogin', {...values, token: localStorage.getItem('token')})
       .then(res => {
-        console.log(res.data.message)
         props.logIn(res.data.token)
       })
     setValues(initState)
@@ -53,7 +51,6 @@ const CreateAccount = (props) => {
       <button onClick={() => {
         window.location.href = "http://localhost:5000/auth/google"
       }}>Sign In with Google</button>
-      <button onClick={props.logOut}>Logout</button>
     </>
       )
 
@@ -68,7 +65,6 @@ const CreateAccount = (props) => {
 
     const mapDispatchToProps = (dispatch) => {
       return {
-          logOut: () => dispatch(logOut()),
           logIn: (token) => dispatch(logIn(token))
       };
     };

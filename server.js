@@ -145,6 +145,12 @@ app.get('/users', (req, res, next) => {
   })
 });
 
+app.get('/user/:userId', (req, res, next) => {
+  UserModel.findOne({ _id: req.params.userId}, (err, users) => {
+    res.json(users[0])
+  })
+});
+
 app.get('/cities/all', (req, res, next) => {
   CityModel.find({}, (err, cities) => {
     res.json(cities)

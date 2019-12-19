@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode'
 
 const CreateAccount = () => {
   const initState = {
-    profilePic: null,
+    profilePic: new Image(),
     username: '',
     password1: '',
     password2: '',
@@ -29,11 +29,19 @@ const CreateAccount = () => {
 
   const setCurrentValueToState = event => {
     const target = event.target
+    if (target.type === 'checkbox') {
+      console.log(target.checked)
+      setValues({
+        ...values, 
+        [event.target.name]: target.checked
+      })
+    } else {
+      setValues({
+        ...values, 
+        [event.target.name]: target.value
+      })
+    }
     
-    setValues({
-      ...values, 
-      [event.target.name]: target.value
-    })
   } 
     return (
         <form onSubmit={handleSubmit}>
@@ -81,11 +89,11 @@ const CreateAccount = () => {
                 onChange={setCurrentValueToState} />
             </div>
           </div>
-          <div class="form-row align-items-center">
-            <div class="col-auto my-1">
-              <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
-              <select name="city" class="custom-select mr-sm-2" id="inlineFormCustomSelect" onChange={setCurrentValueToState}>
-                <option selected value="Choose">Choose...</option>
+          <div className="form-row align-items-center">
+            <div className="col-auto my-1">
+              <label className="mr-sm-2 sr-only" htmlFor="inlineFormCustomSelect">Preference</label>
+              <select name="city" className="custom-select mr-sm-2" id="inlineFormCustomSelect" onChange={setCurrentValueToState}>
+                <option  value="Choose">Choose...</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
@@ -93,22 +101,22 @@ const CreateAccount = () => {
             </div>
           </div>
 
-          <div class="form-group row">
-            <div class="col-sm-10">
-              <div class="form-check">
-                <input name="agreeLicense" class="form-check-input" type="checkbox" id="gridCheck1"
+          <div className="form-group row">
+            <div className="col-sm-10">
+              <div className="form-check">
+                <input name="agreeLicense" className="form-check-input" type="checkbox" id="gridCheck1"
                    onChange={setCurrentValueToState} />
-                <label class="form-check-label" for="gridCheck1">
+                <label className="form-check-label" htmlFor="gridCheck1">
                   I agree to MYtinerary
                 </label>
               </div>
             </div>
           </div>
-          <div class="input-group">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01" />
-              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+          <div className="input-group">
+            <div className="custom-file">
+              <input type="file" className="custom-file-input" id="inputGroupFile01"
+                aria-describedby="inputGroupFileAddon01" onChange={setCurrentValueToState}/>
+              <label className="custom-file-label" name="profilePic" htmlFor="inputGroupFile01">Choose file</label>
             </div>
           </div>
           

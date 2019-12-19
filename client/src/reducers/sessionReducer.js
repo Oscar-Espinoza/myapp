@@ -1,5 +1,5 @@
 const initState = {
-  loggedIn: Boolean.valueOf(localStorage.getItem('token'))
+  loggedIn: localStorage.getItem('token') ? true : false
 }
   
   const sessionReducer = (state = initState, action) => {

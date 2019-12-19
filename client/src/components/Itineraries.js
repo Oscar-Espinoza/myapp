@@ -6,7 +6,17 @@ import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 
-const Itinerary = props => { 
+const Itinerary = props => {
+  
+  const addToFav = (event) => {
+    const button = event.target
+    console.log(button)
+    if (button.className === "btn btn-primary") {
+      button.className = "btn btn-success"
+    } else {
+      button.className = "btn btn-primary"
+    }
+  } 
   const { cityId } = useParams()
   useEffect(() => {
     props.getItineraries(cityId);   
@@ -19,7 +29,8 @@ const Itinerary = props => {
       {props.itineraries.map((itinerary, index) => (
           <div className="col-10">
           <h2>Itinerary #{index + 1}</h2>
-          <Link to={`/Itineraries/${itinerary._id}`}><img src={`${itinerary.profilePic}`} alt="" style={{width: '100px'}} /></Link>  
+          <Link to={`/Itineraries/${itinerary._id}`}><img src={`${itinerary.profilePic}`} alt="" style={{width: '100px'}} /></Link>
+          <button onClick={addToFav} className="btn btn-primary">add to fav</button>  
           </div>        
       ))}      
     </div>

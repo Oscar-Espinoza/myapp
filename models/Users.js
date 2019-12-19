@@ -31,8 +31,7 @@ let UsersSchema = new mongoose.Schema({
         type: Boolean
     },
     googleId: {
-        type: String,
-        unique: true
+        type: String
     },
     favItineraries: [{
         type: mongoose.Schema.Types.ObjectId,
