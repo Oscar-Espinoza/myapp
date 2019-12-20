@@ -6,7 +6,7 @@ import {logIn} from '../actions/sessionActions'
 const LoadUser = (props) => {
     const { token } = useParams()
     useEffect(() => {
-        props.logIn(token);   
+        props.logIn(token); 
         // eslint-disable-next-line react-hooks/exhaustive-deps        
       }, [])
     return(
@@ -23,7 +23,7 @@ const mapeaEstadoscomoProps = state => {
 
   const mapDispatchToProps = (dispatch) => {
     return {
-        logIn: (token) => dispatch(logIn(token))
+        logIn: (token) => dispatch(logIn(token)),
     };
   };
 

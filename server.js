@@ -50,6 +50,7 @@ app.get('/auth/google',
   app.get('/auth/google/callback', 
   passport.authenticate('google', {session: false, failureRedirect: 'http://localhost:3000' }),
   async (req, res) => {
+    console.log(req.user)
     const token = jwt.sign({
       id: req.user._id,
     }, "Secret123456", { expiresIn: '20m' })
@@ -69,7 +70,6 @@ app.post('/user', (req, res)=> {
   .then(()=> {
     const payload = 
     {
-      username: NewUser.username,
       userId: NewUser._id,
     }
     const token = jwt.sign(
@@ -86,6 +86,15 @@ app.post('/user', (req, res)=> {
     })
     
   })
+ })
+
+ app.post('/addItineraryToUserFav/:itineraryId/:userId', async (req, res) => {
+    const doc = await UserModel.findOneAndUpdate({_id: req.params.userId}, 
+      {$addToSet: {favItineraries: {$each: [req.params.itineraryId]}}}, {
+      new: true
+    })
+    res.json(doc)
+    console.log(doc.favItineraries)
  })
  
 
@@ -146,8 +155,9 @@ app.get('/users', (req, res, next) => {
 });
 
 app.get('/user/:userId', (req, res, next) => {
-  UserModel.findOne({ _id: req.params.userId}, (err, users) => {
-    res.json(users[0])
+  console.log(req.params.userId)
+  UserModel.findOne({ _id: req.params.userId }, (err, user) => {
+    res.json(user.favItineraries)
   })
 });
 

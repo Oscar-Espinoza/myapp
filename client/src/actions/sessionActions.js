@@ -1,6 +1,7 @@
 
 export const logOut = () => async (dispatch, getState) => {
     localStorage.removeItem('token')
+    localStorage.removeItem('userFav')
     dispatch({ type: 'UPDATE_SESSION_STATUS', payload: { loggedIn: false }})
   }
 export const logIn = (token) => async (dispatch, getState) => {

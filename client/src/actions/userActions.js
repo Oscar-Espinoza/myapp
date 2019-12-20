@@ -1,7 +1,11 @@
-const userItineraries = () => async (dispatch, getState) => {
-    const response = await fetch("http://localhost:5000/user")
+export const userFavItineraries = (user) => async (dispatch, getState) => {
+    const response = await fetch(`http://localhost:5000/user/${user}`)
         .then(resp=>resp.json());
-    dispatch({ type: 'GET_USER', payload: {favItineraries: response, isLoading: false}})
+    dispatch({ type: 'GET_USER_FAV', payload: {favItineraries: response, isLoading: false}})
 }
 
-export default userItineraries;
+export const addItineraryToFavorites = (userId, itineraryId) => async (dispatch, getState) => {
+    const response = await fetch(`http://localhost:5000/addItineraryToFav/${itineraryId}/${userId}`)
+        .then(resp=>resp.json());
+    dispatch({ type: 'ADD_TO_FAV', payload: {favItineraries: response, isLoading: false}})
+}
