@@ -50,7 +50,7 @@ app.get('/auth/google',
   app.get('/auth/google/callback', 
   passport.authenticate('google', {session: false, failureRedirect: 'http://localhost:3000' }),
   async (req, res) => {
-    console.log(req.user)
+    //console.log(req.user)
     const token = jwt.sign({
       id: req.user._id,
     }, "Secret123456", { expiresIn: '20m' })
@@ -93,7 +93,7 @@ app.post('/user', (req, res)=> {
       {$addToSet: {favItineraries: {$each: [req.params.itineraryId]}}}, {
       new: true
     })
-    res.json(doc)
+    res.status(200).json(doc.favItineraries)
     console.log(doc.favItineraries)
  })
  

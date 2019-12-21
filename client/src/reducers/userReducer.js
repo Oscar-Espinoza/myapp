@@ -1,5 +1,5 @@
 const initState = {
-    favItineraries: localStorage.getItem('userFav')
+    favItineraries: null
 }
   
   const userReducer = (state = initState, action) => {
