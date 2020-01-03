@@ -1,6 +1,6 @@
 const initState = {
     itineraries: [],
-    isLoading: true,
+    isLoading: true
   }
   
   const itineraryReducer = (state = initState, action) => {

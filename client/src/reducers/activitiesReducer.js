@@ -4,7 +4,6 @@ const initState = {
   }
   
   const activityReducer = (state = initState, action) => {
-    console.log(action)
     switch(action.type){
       case 'GET_ACTIVITIES':
         return {

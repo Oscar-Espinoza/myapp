@@ -1,5 +1,5 @@
 const initState = {
-    favItineraries: null
+    favItineraries: []
 }
   
   const userReducer = (state = initState, action) => {

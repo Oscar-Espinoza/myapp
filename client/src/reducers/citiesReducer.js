@@ -1,6 +1,6 @@
 const initState = {
   cities: [],
-  isLoading: true,
+  isLoading: true
 }
 
 const citiesReducer = (state = initState, action) => {

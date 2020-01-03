@@ -4,36 +4,30 @@ import { connect } from 'react-redux'
 import getItineraries from '../actions/itinerariesActions'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import { userFavItineraries, addItineraryToFavorites } from '../actions/userActions'
+import { userFavItineraries, addItineraryToFavorites, removeItineraryFromFavorites } from '../actions/userActions'
 const jwt_decode = require('jwt-decode')
 
 
 const Itinerary = props => {
   let userId = ''
-  console.log(props.favItineraries)
 
   const isInFav = (itineraryId) => {
-    if (props.loggedIn && props.favItineraries != null) {
-      return props.favItineraries.includes(itineraryId) ? "btn btn-success" : "btn btn-primary"
-    } else {
-      return "btn btn-primary"
-    }
+      return props.favItineraries.includes(itineraryId)
   }
+
   if (props.loggedIn) {
     userId = jwt_decode(localStorage.getItem('token')).id
   }  
-  const addToFav = (event) => { 
+  const UpdateFromFav = (event) => { 
     const itineraryId = event.target.id
     let buttonClassName = event.target.className
     if (props.loggedIn) {
-       props.addItineraryToFavorites(userId, itineraryId)
+      if (isInFav(itineraryId)) {
+        props.removeItineraryFromFavorites(userId, itineraryId)
+      } else {
+        props.addItineraryToFavorites(userId, itineraryId)
+      }       
     } 
-    // const button = event.target
-    // if (button.className === "btn btn-primary") {
-    //   button.className = "btn btn-success"
-    // } else {
-    //   button.className = "btn btn-primary"
-    // }
   } 
   const { cityId } = useParams()
   useEffect( () => {
@@ -57,7 +51,7 @@ const Itinerary = props => {
           <div className="col-10">
           <h2>Itinerary #{index + 1}</h2>
           <Link to={`/Itineraries/${itinerary._id}`}><img src={`${itinerary.profilePic}`} alt="" style={{width: '100px'}} /></Link>
-          <button onClick={addToFav} id={itinerary._id} className={isInFav(itinerary._id)}>add to fav</button>  
+          <button onClick={UpdateFromFav} id={itinerary._id} className={isInFav(itinerary._id) ? 'btn btn-success' : 'btn btn-secondary' }>add to fav</button>  
           </div>        
       ))}      
     </div>
@@ -77,7 +71,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
       getItineraries: (id) => dispatch(getItineraries(id)),
       userFavItineraries: (user) => dispatch(userFavItineraries(user)),
-      addItineraryToFavorites: (userId, itineraryId) => dispatch(addItineraryToFavorites(userId, itineraryId))
+      addItineraryToFavorites: (userId, itineraryId) => dispatch(addItineraryToFavorites(userId, itineraryId)),
+      removeItineraryFromFavorites: (userId, itineraryId) => dispatch(removeItineraryFromFavorites(userId, itineraryId))
   };
 };
 

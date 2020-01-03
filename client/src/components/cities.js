@@ -46,7 +46,7 @@ const Cities = props => {
 const mapeaEstadoscomoProps = state => {
   return {
       cities: state.citiesReducer.cities,
-      isLoading: state.isLoading
+      isLoading: state.citiesReducer.isLoading
   }
 }
 

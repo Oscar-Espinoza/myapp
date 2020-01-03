@@ -96,6 +96,15 @@ app.post('/user', (req, res)=> {
     res.status(200).json(doc.favItineraries)
     console.log(doc.favItineraries)
  })
+
+ app.post('/removeItineraryFromFav/:itineraryId/:userId', async (req, res) => {
+  const doc = await UserModel.findOneAndUpdate({_id: req.params.userId}, 
+    {$pull: {favItineraries: {$in: [req.params.itineraryId]}}}, {
+    new: true
+  })
+  console.log(doc.favItineraries)
+  res.status(200).json(doc.favItineraries)
+})
  
 
 app.post('/userLogin', (req, res)=> {
